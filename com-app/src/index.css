@@ -1,0 +1,11 @@
+.row {
+    border-left: solid 1px black;
+}
+
+.cell {
+    display: inline-block;
+    border: solid 1px black;
+    border-left:none;
+    padding: 10px;
+
+}

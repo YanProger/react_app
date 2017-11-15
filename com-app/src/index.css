@@ -9,3 +9,8 @@
     padding: 10px;
 
 }
+
+.cell:hover {
+    background: antiquewhite;
+
+}

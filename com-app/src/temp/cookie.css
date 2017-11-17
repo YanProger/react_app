@@ -1,0 +1,26 @@
+.button {
+    width: 100px;
+    height: 100px;
+    border: none;
+    background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ2oDE-64CRrJZ0iOLWSmm6ah2tqMQQfUwPC3X58s0-nVCvCMJ);
+    background-size: 100px 100px;
+    margin: auto;
+    margin-top: 10px;
+}
+.button:active {
+    opacity: 0.5;
+}
+
+.label {
+    font-size: 25px;
+    text-align: center;
+    width: 91px;
+    font-family: Roboto;
+    color: black;
+    margin: auto;
+    user-select: none;
+}
+
+.test{
+    margin-top: 50px;
+}

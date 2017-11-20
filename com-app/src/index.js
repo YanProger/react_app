@@ -13,17 +13,6 @@ class Label extends React.Component {
         );
     }
 }
-
-class Test extends React.Component {
-    render() {
-        return (
-            <div className="test">
-                {this.props.testprop}
-            </div>
-        );
-    }
-}
-
 class Button extends React.Component {
     constructor(props) {
         super(props);
@@ -40,22 +29,42 @@ class Button extends React.Component {
         );
     };
 }
+class SingIn extends React.Component {
+    onSingInClick(){
 
+    }
+    render() {
+        return (
+            <div>
+                <input className="singinInput" type="text" name="userName"/>
+                <button className="singin" onClick={this.onSingInClick}>SingIn</button>
+            </div>
+        );
+    }
+}
 class Main extends React.Component {
     inc() {
         serv.increaseCookieCount();
     }
 
     render() {
-        return (
-            <div>
-                <Label value={this.props.value}/>
-                <Button onClick={() => this.inc()}/>
-                {/*<Test testprop={'TEST'}/>*/}
-            </div>
-        );
+        if (this.props.p.isLogin) {
+            return (
+                <div>
+                    <Label value={this.props.p.val}/>
+                    <Button onClick={() => this.inc()}/>
+                </div>
+            );
+        } else {
+            return (
+                <SingIn/>
+            );
+        }
     }
 }
+
+
+
 
 function wait() {
     window.setTimeout(checkCookieCount,500);
@@ -73,23 +82,34 @@ wait();
 
 function update(params) {
     ReactDOM.render(
-        <Main value={params.val}/>,
+        <Main p={params}/>,
         document.getElementById('root')
     );
 }
 
 
-let serv = new  Server('http://localhost:8080');
+//let serv = new  Server('http://localhost:8080');
+let serv = new  Server('http://192.168.0.93:8080');
 
 serv.xhttr.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
-        update({
-            val: this.responseText
-        });
+        let answer = JSON.parse(this.responseText);
+
+        if (answer.code &&  answer.code === 0){
+            if (answer.object.cc) {
+                update({
+                    val: answer.object.cc,
+                    title: answer.object.un || '',
+                    isLogin: false
+                });
+            }
+        }
     }
 };
 
 
 update({
-    val: '0'
+    val: '0',
+    title: '',
+    isLogin: false
 });

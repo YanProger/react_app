@@ -7,12 +7,18 @@ export class Server {
     increaseCookieCount(){
         this.xhttr.open('POST', this._ip, true);
         this.xhttr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        this.xhttr.send('var=' + encodeURIComponent('inc'));
+        this.xhttr.send('t=' + encodeURIComponent('inc'));
     }
 
     checkCookieCount(){
         this.xhttr.open('POST', this._ip, true);
         this.xhttr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        this.xhttr.send('var=' + encodeURIComponent('check')) ;
+        this.xhttr.send('t=' + encodeURIComponent('check')) ;
+    }
+
+    login(name){
+        this.xhttr.open('POST', this._ip, true);
+        this.xhttr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        this.xhttr.send('t=' + encodeURIComponent('login') + '&n=' + encodeURIComponent(name)) ;
     }
 }

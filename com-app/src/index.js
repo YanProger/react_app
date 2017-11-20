@@ -1,67 +1,95 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './cookie.css'
+import {Server} from './api'
 
-class Row extends React.Component {
-    render(){
-        return (
-            <div className="row">
-                {this.props.row.map((e, index) => <Cell key={index} value={e}/>)}
-            </div>
-        );
-    }
-}
 
-class Cell extends React.Component {
-    render(){
+class Label extends React.Component {
+    render() {
         return (
-            <div className="cell">
+            <div className="label">
                 {this.props.value}
             </div>
-
         );
     }
 }
 
-class Table extends React.Component {
-    render(){
+class Test extends React.Component {
+    render() {
         return (
-            <div className="table">
-                {this.props.table.map((e, index) => <Row key={index} row={e}/>)}
+            <div className="test">
+                {this.props.testprop}
             </div>
         );
     }
 }
 
-let table = [];
-
-let row1 = [];
-row1.push("Fist");
-row1.push("Second");
-row1.push("Third");
-row1.push("Four");
-
-let row2 = [];
-row2.push("Fist");
-row2.push("Second");
-row2.push("Third");
-row2.push("Four");
-
-let row3 = [];
-row3.push("Fist");
-row3.push("Second");
-row3.push("Third");
-row3.push("Four");
-
-table.push(row1);
-table.push(row2);
-table.push(row3);
+class Button extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            onClick: props.onClick
+        }
+    }
 
 
-//--------------------------------
+    render() {
+        return (
+            <div className="button" onClick={this.state.onClick}>
+            </div>
+        );
+    };
+}
+
+class Main extends React.Component {
+    inc() {
+        serv.increaseCookieCount();
+    }
+
+    render() {
+        return (
+            <div>
+                <Label value={this.props.value}/>
+                <Button onClick={() => this.inc()}/>
+                {/*<Test testprop={'TEST'}/>*/}
+            </div>
+        );
+    }
+}
+
+function wait() {
+    window.setTimeout(checkCookieCount,500);
+}
+
+function checkCookieCount() {
+    serv.checkCookieCount();
+    wait();
+}
+
+wait();
 
 
-ReactDOM.render(
-  <Table table={table}/>,
-    document.getElementById('root')
-);
+// ========================================
+
+function update(params) {
+    ReactDOM.render(
+        <Main value={params.val}/>,
+        document.getElementById('root')
+    );
+}
+
+
+let serv = new  Server('http://localhost:8080');
+
+serv.xhttr.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+        update({
+            val: this.responseText
+        });
+    }
+};
+
+
+update({
+    val: '0'
+});

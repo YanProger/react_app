@@ -27,8 +27,8 @@ http.createServer(function (req, res) {
         let r = JSON.stringify( getAnswer(params));
         res.end(r);
     });
-//}).listen(8080, 'localhost');
-}).listen(8080, '192.168.0.93');
+}).listen(8080, '192.168.0.103');
+//}).listen(8080, '192.168.0.93');
 
 function getAnswer(params) {
     if (params.t){
@@ -60,7 +60,8 @@ function getAnswer(params) {
                         code: 0,
                         message: 'increased',
                         object: {
-                            cc: cookieCount
+                            cc: cookieCount,
+                            un: clicker || ''
                         }
                     };
                 }

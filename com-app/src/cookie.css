@@ -14,7 +14,7 @@
 .label {
     font-size: 25px;
     text-align: center;
-    width: 91px;
+    width: 100% ;
     font-family: Roboto;
     color: black;
     margin: auto;
@@ -26,9 +26,15 @@
 }
 
 .singin{
-
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    height: 41px;
+    width: 80px;
+    font-family:  monospace;
 }
 
 .singinInput{
-
+    display: block;
+    margin: auto;
 }

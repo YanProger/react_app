@@ -62,8 +62,6 @@ export class Cookie {
 
     Main (){
         this._update({
-            val: '0',
-            title: '',
             isLogin: false
         });
 

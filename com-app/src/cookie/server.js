@@ -27,8 +27,8 @@ http.createServer(function (req, res) {
         let r = JSON.stringify( getAnswer(params));
         res.end(r);
     });
-}).listen(8080, '192.168.0.103');
-//}).listen(8080, '192.168.0.93');
+//}).listen(8080, '192.168.0.103');
+}).listen(8080, '192.168.1.70');
 
 function getAnswer(params) {
     if (params.t){

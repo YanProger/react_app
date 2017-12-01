@@ -6,6 +6,7 @@ import {Main} from "./front";
 export class Cookie {
     constructor(){
         let self = this;
+        self.users = [];
         self.serv = new Server('http://192.168.1.70:8080');
         self.serv.xhttr.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
@@ -13,6 +14,7 @@ export class Cookie {
 
                 if (answer.code != null &&  answer.code === 0){
                     if (answer.object.cc != null) {
+                        self._addNewUser(answer.object.un);
                         self._update( {
                             val: answer.object.cc,
                             title: answer.object.un ||  '',
@@ -30,10 +32,18 @@ export class Cookie {
 
     _update(params) {
         params.server = this.serv;
+        params.users = this.users;
         ReactDOM.render(
             <Main p={params}/>,
             document.getElementById('root')
         );
+    }
+
+    _addNewUser(nurer) {
+        let existUsrs = this.users.filter((item) => item === nurer);
+        if (existUsrs.length === 0) {
+            this.users.push(nurer);
+        }
     }
 
     _refreshState(){

@@ -40,6 +40,7 @@ export class Main extends React.Component {
                     <Label value={this.props.p.val}/>
                     <Button server={this.props.p.server}/>
                     <Label value={this.props.p.title} />
+                    {this.props.p.users.map((currentValue, index)=> <li key={index}>{currentValue}</li> )}
                 </div>
             );
         } else {

@@ -13,14 +13,14 @@ export class Cookie {
 
                 if (answer.code != null &&  answer.code === 0){
                     if (answer.object.cc != null) {
-                        self.update( {
+                        self._update( {
                             val: answer.object.cc,
                             title: answer.object.un ||  '',
                             isLogin: true
                         });
                     }
                 } else if (answer.code === 1){
-                    self.update( {
+                    self._update( {
                         isLogin: false
                     });
                 }
@@ -28,7 +28,7 @@ export class Cookie {
         };
     }
 
-    update(params) {
+    _update(params) {
         params.server = this.serv;
         ReactDOM.render(
             <Main p={params}/>,
@@ -36,7 +36,7 @@ export class Cookie {
         );
     }
 
-    refreshState(){
+    _refreshState(){
         let self = this;
         function wait() {
             window.setTimeout(checkCookieCount,500);
@@ -50,5 +50,14 @@ export class Cookie {
         wait();
     }
 
+    Main (){
+        this._update({
+            val: '0',
+            title: '',
+            isLogin: false
+        });
+
+        this._refreshState();
+    }
 }
 

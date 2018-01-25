@@ -11,12 +11,6 @@ http.createServer(function (req, res) {
 
     let remIP = req.connection.remoteAddress;
 
-    // let q = url.parse(req.url, true).query;
-    // if (q.var === 'inc'){
-    //     cookieCount++;
-    // }
-    // res.end(cookieCount + '');
-
     let body = "";
     req.on('data', function (chunk) {
         body += chunk;

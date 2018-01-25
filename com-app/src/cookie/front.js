@@ -32,6 +32,19 @@ class SingIn extends React.Component {
         );
     }
 }
+
+class OnlineList extends React.Component {
+    render() {
+        return (
+            <div>
+                <label className="onlineLabel">Online users:</label>
+                {this.props.onlineusers.map((currentValue, index)=> <li key={index}>{currentValue}</li> )}
+            </div>
+        );
+    }
+}
+
+
 export class Main extends React.Component {
     render() {
         if (this.props.p.isLogin) {
@@ -40,7 +53,7 @@ export class Main extends React.Component {
                     <Label value={this.props.p.val}/>
                     <Button server={this.props.p.server}/>
                     <Label value={this.props.p.title} />
-                    {this.props.p.users.map((currentValue, index)=> <li key={index}>{currentValue}</li> )}
+                    <OnlineList onlineusers={this.props.p.users}  />
                 </div>
             );
         } else {

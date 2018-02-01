@@ -45,16 +45,28 @@ function getAnswer(params) {
                         object: null
                     }
                 }
+            case 'logout':
+                deleteUser(params.remIP);
+                return{
+                    code: 1,
+                    message: 'you loged out!',
+                    object: null
+                };
             case 'inc':
                 if (getUser(params.remIP)){
                     cookieCount++;
                     let usr = getUser(params.remIP);
+                    if (usr) {
+                        if (!usr.ucc) usr.ucc = 0;
+                        usr.ucc = usr.ucc + 1;
+                    }
                     clicker = usr ? usr.name : undefined;
                     return{
                         code: 0,
                         message: 'increased',
                         object: {
                             cc: cookieCount,
+                            tu: todayUsers,
                             un: clicker || ''
                         }
                     };
@@ -75,6 +87,7 @@ function getAnswer(params) {
                         message: 'current value',
                         object: {
                             cc: cookieCount,
+                            tu: todayUsers,
                             un: clicker || ''
                         }
                     };
@@ -93,4 +106,15 @@ function getUser(uid) {
     return todayUsers.find(function (item) {
         return item.uid === uid;
     });
+}
+
+function deleteUser(uid) {
+    let usr = todayUsers.find(function (item) {
+        return item.uid === uid;
+    });
+    let index = todayUsers.indexOf(usr);
+
+    if (index > -1) {
+        todayUsers.splice(index, 1);
+    }
 }

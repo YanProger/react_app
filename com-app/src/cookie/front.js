@@ -13,7 +13,7 @@ class Label extends React.Component {
 class Button extends React.Component {
     render() {
         return (
-            <div className="button" onClick={() => this.props.server.increaseCookieCount()}>
+            <div className={this.props.clss}  onClick={() => this.props.server[this.props.func]()}>
             </div>
         );
     };
@@ -27,7 +27,7 @@ class SingIn extends React.Component {
         return (
             <div>
                 <input className="singinInput" type="text" name="userName"/>
-                <button className="singin" onClick={() => this.onSingInClick(this.props.server)}>SingIn</button>
+                <button className="singin" onClick={() => this.onSingInClick(this.props.server)}>Sign In</button>
             </div>
         );
     }
@@ -37,8 +37,22 @@ class OnlineList extends React.Component {
     render() {
         return (
             <div>
-                <label className="onlineLabel">Online users:</label>
-                {this.props.onlineusers.map((currentValue, index)=> <li key={index}>{currentValue}</li> )}
+                <label className="onlineLabel">Joined users:</label>
+                <ul className="onlineList">
+                    {this.props.onlineusers
+                        .sort((a, b) => a.ucc < b.ucc )
+                        .map((currentValue)=> <li key={currentValue.uid}>{currentValue.name + '   ' + (currentValue.ucc || 0)}</li> )}
+                </ul>
+            </div>
+        );
+    }
+}
+
+class ErrorInform extends  React.Component {
+    render() {
+        return (
+            <div className="blockScreen">
+                <div className="Message">Cookie can't connect to server :(</div>
             </div>
         );
     }
@@ -51,15 +65,25 @@ export class Main extends React.Component {
             return (
                 <div>
                     <Label value={this.props.p.val}/>
-                    <Button server={this.props.p.server}/>
-                    <Label value={this.props.p.title} />
-                    <OnlineList onlineusers={this.props.p.users}  />
+                    <Button clss="button" server={this.props.p.server} func='increaseCookieCount'/>
+                    <Button clss="exitButton" server={this.props.p.server} func='logout'/>
+                    <Label value={this.props.p.title}/>
+                    <OnlineList onlineusers={this.props.p.users}/>
                 </div>
             );
-        } else {
+        }
+
+        if (this.props.p.hasError) {
             return (
-                <SingIn server={this.props.p.server}/>
+                <div>
+                    <SingIn server={this.props.p.server}/>
+                    <ErrorInform/>
+                </div>
             );
         }
+
+        return (
+            <SingIn server={this.props.p.server}/>
+        );
     }
 }
